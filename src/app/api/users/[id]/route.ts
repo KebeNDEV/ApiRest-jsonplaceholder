@@ -3,7 +3,37 @@ import { ApiResponse } from '@/lib/api-response';
 
 const prisma = new PrismaClient();
 
-// GET /api/users/[id]
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     tags: [users]
+ *     summary: Obtiene un usuario específico
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Usuario encontrado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
+ *       404:
+ *         $ref: '#/components/responses/NotFound'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -36,7 +66,61 @@ export async function GET(
   }
 }
 
-// PUT /api/users/[id]
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     tags: [users]
+ *     summary: Actualiza un usuario
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del usuario
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               username:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               phone:
+ *                 type: string
+ *               website:
+ *                 type: string
+ *               address:
+ *                 type: object
+ *               company:
+ *                 type: object
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Usuario actualizado exitosamente"
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
+ *       404:
+ *         $ref: '#/components/responses/NotFound'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
 export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
@@ -54,7 +138,38 @@ export async function PUT(
   }
 }
 
-// DELETE /api/users/[id]
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     tags: [users]
+ *     summary: Elimina un usuario
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Usuario eliminado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Usuario eliminado exitosamente"
+ *       404:
+ *         $ref: '#/components/responses/NotFound'
+ *       500:
+ *         $ref: '#/components/responses/ServerError'
+ */
 export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
