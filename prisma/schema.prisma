@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  title     String
+  body      String
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  name      String
+  email     String
+  body      String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id])
+}
+
+model Album {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String
+  photos    Photo[]
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Photo {
+  id        Int      @id @default(autoincrement())
+  albumId   Int
+  title     String
+  url       String
+  thumbnailUrl String
+  createdAt DateTime @default(now())
+  album     Album    @relation(fields: [albumId], references: [id])
+}
+
+model Todo {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String
+  completed Boolean
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  username  String
+  email     String
+  phone     String
+  website   String
+  posts     Post[]
+  albums    Album[]
+  todos     Todo[]
+  createdAt DateTime @default(now())
+  address   Json?
+  company   Json?
+} 
